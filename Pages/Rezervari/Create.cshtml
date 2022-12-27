@@ -34,6 +34,12 @@
                 <span asp-validation-for="Rezervare.DataRezervare" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Rezervare.ChelnerID" class="control-label">Nume Chelner</label>
+                <select asp-for="Rezervare.ChelnerID" class="form-control" asp-items="ViewBag.ChelnerID">
+                </select>
+                <span asp-validation-for="Rezervare.ChelnerID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Proiect_Final.Data;
 using Proiect_Final.Models;
 
-namespace Proiect_Final.Pages.Rezervari
+namespace Proiect_Final.Pages.Chelneri
 {
     public class EditModel : PageModel
     {
@@ -21,23 +21,21 @@ namespace Proiect_Final.Pages.Rezervari
         }
 
         [BindProperty]
-        public Rezervare Rezervare { get; set; } = default!;
+        public Chelner Chelner { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Rezervare == null)
+            if (id == null || _context.Chelner == null)
             {
                 return NotFound();
             }
 
-            var rezervare =  await _context.Rezervare.FirstOrDefaultAsync(m => m.ID == id);
-            if (rezervare == null)
+            var chelner =  await _context.Chelner.FirstOrDefaultAsync(m => m.ID == id);
+            if (chelner == null)
             {
                 return NotFound();
             }
-            Rezervare = rezervare;
-            ViewData["ChelnerID"] = new SelectList(_context.Set<Chelner>(), "ID",
-"NumeChelner");
+            Chelner = chelner;
             return Page();
         }
 
@@ -50,7 +48,7 @@ namespace Proiect_Final.Pages.Rezervari
                 return Page();
             }
 
-            _context.Attach(Rezervare).State = EntityState.Modified;
+            _context.Attach(Chelner).State = EntityState.Modified;
 
             try
             {
@@ -58,7 +56,7 @@ namespace Proiect_Final.Pages.Rezervari
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RezervareExists(Rezervare.ID))
+                if (!ChelnerExists(Chelner.ID))
                 {
                     return NotFound();
                 }
@@ -71,9 +69,9 @@ namespace Proiect_Final.Pages.Rezervari
             return RedirectToPage("./Index");
         }
 
-        private bool RezervareExists(int id)
+        private bool ChelnerExists(int id)
         {
-          return _context.Rezervare.Any(e => e.ID == id);
+          return _context.Chelner.Any(e => e.ID == id);
         }
     }
 }

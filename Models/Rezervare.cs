@@ -16,5 +16,8 @@ namespace Proiect_Final.Models
         [DataType(DataType.DateTime)]
         public DateTime DataRezervare { get; set; }
 
+        public int? ChelnerID { get; set; }
+        public Chelner? Chelner { get; set; }
+
     }
 }

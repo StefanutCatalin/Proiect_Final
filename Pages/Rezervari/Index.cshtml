@@ -25,6 +25,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Rezervare[0].DataRezervare)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rezervare[0].Chelner.NumeChelner)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -43,6 +46,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.DataRezervare)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Chelner.NumeChelner)
+                </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
