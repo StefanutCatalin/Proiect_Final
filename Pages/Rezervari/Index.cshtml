@@ -17,7 +17,7 @@
                 @Html.DisplayNameFor(model => model.Rezervare[0].NumeRestaurant)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Rezervare[0].Client)
+                @Html.DisplayNameFor(model => model.Rezervare[0].Client.NumeIntreg)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Rezervare[0].NumarPersoane)
@@ -38,7 +38,7 @@
                 @Html.DisplayFor(modelItem => item.NumeRestaurant)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Client)
+                @Html.DisplayFor(modelItem => item.Client.NumeIntreg)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NumarPersoane)

@@ -39,6 +39,27 @@ namespace Proiect_Final.Migrations
                     b.ToTable("Chelner");
                 });
 
+            modelBuilder.Entity("Proiect_Final.Models.Client", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<string>("Nume")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Prenume")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Client");
+                });
+
             modelBuilder.Entity("Proiect_Final.Models.Rezervare", b =>
                 {
                     b.Property<int>("ID")
@@ -50,9 +71,8 @@ namespace Proiect_Final.Migrations
                     b.Property<int?>("ChelnerID")
                         .HasColumnType("int");
 
-                    b.Property<string>("Client")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("ClientID")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DataRezervare")
                         .HasColumnType("datetime2");
@@ -68,6 +88,8 @@ namespace Proiect_Final.Migrations
 
                     b.HasIndex("ChelnerID");
 
+                    b.HasIndex("ClientID");
+
                     b.ToTable("Rezervare");
                 });
 
@@ -77,10 +99,21 @@ namespace Proiect_Final.Migrations
                         .WithMany("Rezervari")
                         .HasForeignKey("ChelnerID");
 
+                    b.HasOne("Proiect_Final.Models.Client", "Client")
+                        .WithMany("Rezervari")
+                        .HasForeignKey("ClientID");
+
                     b.Navigation("Chelner");
+
+                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("Proiect_Final.Models.Chelner", b =>
+                {
+                    b.Navigation("Rezervari");
+                });
+
+            modelBuilder.Entity("Proiect_Final.Models.Client", b =>
                 {
                     b.Navigation("Rezervari");
                 });

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Proiect_Final.Data;
 using Proiect_Final.Models;
 
-namespace Proiect_Final.Pages.Rezervari
+namespace Proiect_Final.Pages.Clienti
 {
     public class IndexModel : PageModel
     {
@@ -19,16 +19,13 @@ namespace Proiect_Final.Pages.Rezervari
             _context = context;
         }
 
-        public IList<Rezervare> Rezervare { get;set; } = default!;
+        public IList<Client> Client { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.Rezervare != null)
+            if (_context.Client != null)
             {
-                Rezervare = await _context.Rezervare
-                    .Include(b => b.Chelner)
-                    .Include(b => b.Client)
-                    .ToListAsync();
+                Client = await _context.Client.ToListAsync();
             }
         }
     }

@@ -15,13 +15,8 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Rezervare.NumeRestaurant" class="control-label"></label>
-                <input asp-for="Rezervare.NumeRestaurant" class="form-control" />
+                <input asp-for="Rezervare.NumeRestaurant" class="form-control" > </input>
                 <span asp-validation-for="Rezervare.NumeRestaurant" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Rezervare.Client" class="control-label"></label>
-                <input asp-for="Rezervare.Client" class="form-control" />
-                <span asp-validation-for="Rezervare.Client" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Rezervare.NumarPersoane" class="control-label"></label>
@@ -39,6 +34,13 @@
                 </select>
                 <span asp-validation-for="Rezervare.ChelnerID" class="text-danger"></span>
             </div>
+                        <div class="form-group">
+                <label asp-for="Rezervare.ClientID" class="control-label">Nume Client</label>
+                <select asp-for="Rezervare.ClientID" class="form-control" asp-items="ViewBag.ClientID">
+                </select>
+                <span asp-validation-for="Rezervare.ClientID" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

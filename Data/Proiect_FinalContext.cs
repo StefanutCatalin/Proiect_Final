@@ -17,5 +17,7 @@ namespace Proiect_Final.Data
         public DbSet<Proiect_Final.Models.Rezervare> Rezervare { get; set; } = default!;
 
         public DbSet<Proiect_Final.Models.Chelner> Chelner { get; set; }
+
+        public DbSet<Proiect_Final.Models.Client> Client { get; set; }
     }
 }

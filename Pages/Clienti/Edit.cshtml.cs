@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Proiect_Final.Data;
 using Proiect_Final.Models;
 
-namespace Proiect_Final.Pages.Rezervari
+namespace Proiect_Final.Pages.Clienti
 {
     public class EditModel : PageModel
     {
@@ -21,25 +21,21 @@ namespace Proiect_Final.Pages.Rezervari
         }
 
         [BindProperty]
-        public Rezervare Rezervare { get; set; } = default!;
+        public Client Client { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Rezervare == null)
+            if (id == null || _context.Client == null)
             {
                 return NotFound();
             }
 
-            var rezervare =  await _context.Rezervare.FirstOrDefaultAsync(m => m.ID == id);
-            if (rezervare == null)
+            var client =  await _context.Client.FirstOrDefaultAsync(m => m.ID == id);
+            if (client == null)
             {
                 return NotFound();
             }
-            Rezervare = rezervare;
-            ViewData["ChelnerID"] = new SelectList(_context.Set<Chelner>(), "ID",
-"NumeChelner");
-            ViewData["ClientID"] = new SelectList(_context.Set<Client>(), "ID",
-"NumeIntreg");
+            Client = client;
             return Page();
         }
 
@@ -52,7 +48,7 @@ namespace Proiect_Final.Pages.Rezervari
                 return Page();
             }
 
-            _context.Attach(Rezervare).State = EntityState.Modified;
+            _context.Attach(Client).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +56,7 @@ namespace Proiect_Final.Pages.Rezervari
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RezervareExists(Rezervare.ID))
+                if (!ClientExists(Client.ID))
                 {
                     return NotFound();
                 }
@@ -73,9 +69,9 @@ namespace Proiect_Final.Pages.Rezervari
             return RedirectToPage("./Index");
         }
 
-        private bool RezervareExists(int id)
+        private bool ClientExists(int id)
         {
-          return _context.Rezervare.Any(e => e.ID == id);
+          return _context.Client.Any(e => e.ID == id);
         }
     }
 }
