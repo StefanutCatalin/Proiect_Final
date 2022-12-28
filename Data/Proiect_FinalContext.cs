@@ -19,5 +19,7 @@ namespace Proiect_Final.Data
         public DbSet<Proiect_Final.Models.Chelner> Chelner { get; set; }
 
         public DbSet<Proiect_Final.Models.Client> Client { get; set; }
+
+        public DbSet<Proiect_Final.Models.Categorie> Categorie { get; set; }
     }
 }

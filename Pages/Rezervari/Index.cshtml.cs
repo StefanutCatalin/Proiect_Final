@@ -18,18 +18,33 @@ namespace Proiect_Final.Pages.Rezervari
         {
             _context = context;
         }
+        
 
-        public IList<Rezervare> Rezervare { get;set; } = default!;
-
-        public async Task OnGetAsync()
+        public IList<Rezervare> Rezervare { get;set; }
+        public MancareData MancareD { get; set; }
+        public int RezervareID { get; set; }
+        public int CategoryID { get; set; }
+        public async Task OnGetAsync(int? id, int? categoryID)
         {
-            if (_context.Rezervare != null)
+            MancareD = new MancareData();
+
+            MancareD.Rezervari = await _context.Rezervare
+                .Include(b => b.Chelner)
+                .Include(b => b.Client)
+                .Include(b => b.CategoriiMancare)
+            .ThenInclude(b => b.Categorie)
+            .AsNoTracking()
+            .OrderBy(b => b.NumeRestaurant)
+            .ToListAsync();
+            if (id != null)
             {
-                Rezervare = await _context.Rezervare
-                    .Include(b => b.Chelner)
-                    .Include(b => b.Client)
-                    .ToListAsync();
+                RezervareID =id.Value;
+                Rezervare rezervare = MancareD.Rezervari
+                .Where(i => i.ID == id.Value).Single();
+                MancareD.Categorii = rezervare.CategoriiMancare.Select(s => s.Categorie);
             }
         }
+
+
     }
 }

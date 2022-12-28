@@ -17,6 +17,7 @@ namespace Proiect_Final.Models
         public Chelner? Chelner { get; set; }
         public int? ClientID { get; set; }
         public Client? Client { get; set; }
+        public ICollection<CategorieMancare>? CategoriiMancare { get; set; }
 
     }
 }
