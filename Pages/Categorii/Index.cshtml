@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id:int?}"
 @model Proiect_Final.Pages.Categorii.IndexModel
 
 @{
@@ -19,13 +19,24 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model.Categorie) {
-        <tr>
+    <t
+
+
+        body>
+        @foreach (var item in Model.CategorieData.Categorii)
+        {
+            string selectedRow = "";
+            if (item.ID == Model.CategorieID)
+            {
+                selectedRow = "table-success";
+            }
+            <tr class="@selectedRow">
+
             <td>
                 @Html.DisplayFor(modelItem => item.NumeCategorie)
             </td>
             <td>
+                    <a asp-page="./Index" asp-route-id="@item.ID">Select</a> |
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
@@ -34,3 +45,33 @@
 }
     </tbody>
 </table>
+
+@if (Model.CategorieData.Rezervari != null)
+{
+    <h3>Categorii alese de Clienții selectați</h3>
+    <table class="table">
+
+        @foreach (var item in Model.CategorieData.Categorii)
+        {
+            string selectedRow = "";
+            if (item.ID == Model.CategorieID)
+            {
+                selectedRow = "table-success";
+            }
+            <tr class="@selectedRow">
+
+                <td>
+                    @{
+                        foreach (var b in item.CategoriiMancare)
+                        {
+
+                            @b.Categorie
+
+                            <br />
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+}

@@ -18,15 +18,24 @@ namespace Proiect_Final.Pages.Rezervari
         {
             _context = context;
         }
-        
 
-        public IList<Rezervare> Rezervare { get;set; }
+
+        public IList<Rezervare> Rezervare { get; set; }
         public MancareData MancareD { get; set; }
         public int RezervareID { get; set; }
         public int CategoryID { get; set; }
-        public async Task OnGetAsync(int? id, int? categoryID)
+        public string NumeRestaurantSort { get; set; }
+        public string ClientSort { get; set; }
+
+        public string CurrentFilter { get; set; }
+        public async Task OnGetAsync(int? id, int? categoryID, string sortOrder, string
+searchString)
         {
             MancareD = new MancareData();
+
+            NumeRestaurantSort = String.IsNullOrEmpty(sortOrder) ? "numerestaurant_desc" : "";
+            ClientSort = String.IsNullOrEmpty(sortOrder) ? "client_desc" : "";
+            CurrentFilter = searchString;
 
             MancareD.Rezervari = await _context.Rezervare
                 .Include(b => b.Chelner)
@@ -36,15 +45,35 @@ namespace Proiect_Final.Pages.Rezervari
             .AsNoTracking()
             .OrderBy(b => b.NumeRestaurant)
             .ToListAsync();
-            if (id != null)
+
+            if (!String.IsNullOrEmpty(searchString))
             {
-                RezervareID =id.Value;
-                Rezervare rezervare = MancareD.Rezervari
-                .Where(i => i.ID == id.Value).Single();
-                MancareD.Categorii = rezervare.CategoriiMancare.Select(s => s.Categorie);
+                MancareD.Rezervari = MancareD.Rezervari.Where(s => s.Client.Prenume.Contains(searchString)
+
+               || s.Client.Nume.Contains(searchString)
+               || s.NumeRestaurant.Contains(searchString));
+
+                if (id != null)
+                {
+                    RezervareID = id.Value;
+                    Rezervare rezervare = MancareD.Rezervari
+                    .Where(i => i.ID == id.Value).Single();
+                    MancareD.Categorii = rezervare.CategoriiMancare.Select(s => s.Categorie);
+                }
+                switch (sortOrder)
+                {
+                    case "numerestaurant_desc":
+                        MancareD.Rezervari = MancareD.Rezervari.OrderByDescending(s =>
+                       s.NumeRestaurant);
+                        break;
+                    case "client_desc":
+                        MancareD.Rezervari = MancareD.Rezervari.OrderByDescending(s =>
+                       s.Client.NumeIntreg);
+                        break;
+                }
+
+
             }
         }
-
-
     }
 }

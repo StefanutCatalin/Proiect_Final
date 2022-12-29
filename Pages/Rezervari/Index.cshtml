@@ -10,14 +10,31 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+<form asp-page="./Index" method="get">
+ <div class="form-actions no-color">
+ <p>
+ Gasește după Numele Restaurantului / Numele clientului:
+ <input type="text" name="SearchString" value="@Model.CurrentFilter"
+/>
+ <input type="submit" value="Search" class="btn btn-primary" /> |
+ <a asp-page="./Index">Înapoi la lista completa</a>
+ </p>
+ </div>
+</form>
+
+
 <table class="table">
     <thead>
         <tr>
             <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.NumeRestaurantSort">
                 @Html.DisplayNameFor(model => model.Rezervare[0].NumeRestaurant)
+             </a>
             </th>
             <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.ClientSort">
                 @Html.DisplayNameFor(model => model.Rezervare[0].Client.NumeIntreg)
+            </a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Rezervare[0].NumarPersoane)

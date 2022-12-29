@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Proiect_Final.Data;
 using Proiect_Final.Models;
+using Proiect_Final.Models.ViewModels;
 
 namespace Proiect_Final.Pages.Categorii
 {
@@ -21,12 +22,27 @@ namespace Proiect_Final.Pages.Categorii
 
         public IList<Categorie> Categorie { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public CategorieIndexData CategorieData { get; set; }
+        public int CategorieID { get; set; }
+        public int RezervareID { get; set; }
+        public async Task OnGetAsync(int? id, int? RezervareID)
         {
-            if (_context.Categorie != null)
+            CategorieData = new CategorieIndexData();
+            CategorieData.Categorii = await _context.Categorie
+            .Include(i => i.CategoriiMancare)
+            .ThenInclude(i => i.Rezervare)
+            .ThenInclude(i => i.Client)
+            .OrderBy(i => i.NumeCategorie)
+            .ToListAsync();
+            if (id != null)
             {
-                Categorie = await _context.Categorie.ToListAsync();
+                CategorieID = id.Value;
+                Categorie categorie = CategorieData.Categorii.Where(i => i.ID == id.Value).Single();
+                CategorieData.CategoriiMancare = categorie.CategoriiMancare;
             }
+
+
+
         }
     }
 }
