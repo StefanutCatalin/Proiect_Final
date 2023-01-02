@@ -21,5 +21,9 @@ namespace Proiect_Final.Data
         public DbSet<Proiect_Final.Models.Client> Client { get; set; }
 
         public DbSet<Proiect_Final.Models.Categorie> Categorie { get; set; }
+
+        public DbSet<Proiect_Final.Models.Angajat> Angajat { get; set; }
+
+        public DbSet<Proiect_Final.Models.Structura> Structura { get; set; }
     }
 }
