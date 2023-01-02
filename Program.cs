@@ -4,8 +4,22 @@ using Proiect_Final.Data;
 using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminPolicy", policy =>
+   policy.RequireRole("Admin"));
+});
+
+
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AuthorizeFolder("/Rezervari");
+    options.Conventions.AllowAnonymousToPage("/Rezervari/Index");
+    options.Conventions.AllowAnonymousToPage("/Rezervari/Details");
+    options.Conventions.AuthorizeFolder("/Angajati", "AdminPolicy");
+
+});
 builder.Services.AddDbContext<Proiect_FinalContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Proiect_FinalContext") ?? throw new InvalidOperationException("Connection string 'Proiect_FinalContext' not found.")));
 
@@ -15,6 +29,7 @@ builder.Services.AddDbContext<LibraryIdentityContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("Proiect_FinalContext") ?? throw new InvalidOperationException("Connection string 'Proiect_FinalContext' not found.")));
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
  .AddEntityFrameworkStores<LibraryIdentityContext>();
 
 

@@ -9,6 +9,7 @@ namespace Proiect_Final.Models
         [Display(Name = "Numele restaurantului")]
         public string NumeRestaurant { get; set; }
         [Display(Name = "Numarul de persoane")]
+        [Range(1, 6)]
         public int NumarPersoane { get; set; }
 
         [DataType(DataType.DateTime)]

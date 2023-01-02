@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Security.Policy;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,6 +14,8 @@ using Proiect_Final.Models;
 
 namespace Proiect_Final.Pages.Rezervari
 {
+    [Authorize(Roles = "Admin")]
+
     public class CreateModel : CategoriiMancarePageModel
     {
         private readonly Proiect_Final.Data.Proiect_FinalContext _context;
